@@ -1,111 +1,126 @@
-// General matching on graph
-
-const int maxv = 1000;
-const int maxe = 50000;
-
-// Index from 1
-// Directed
-struct EdmondsLawler {
-    int n, E, start, finish, newRoot, qsize, adj[maxe], next[maxe], last[maxv], mat[maxv], que[maxv], dad[maxv], root[maxv];
-    bool inque[maxv], inpath[maxv], inblossom[maxv];
-
-    void init(int _n) {
-        n = _n; E = 0;
-        for(int x=1; x<=n; ++x) { last[x] = -1; mat[x] = 0; }
+class MatchingGraph {
+public:
+    vector <vector<int> > adj;
+    vector <bool> blossom;
+    vector <int> parent;
+    vector <int> base;
+    vector <int> match;
+    int n;
+    MatchingGraph() {
+        n = 0;
     }
-    void add(int u, int v) {
-        adj[E] = v; next[E] = last[u]; last[u] = E++;
+    void addEdge(int x, int y) {
+        adj[x].push_back(y);
+        adj[y].push_back(x);
     }
-    int lca(int u, int v) {
-        for(int x=1; x<=n; ++x) inpath[x] = false;
+    void clearGraph() {
+        int i;
+        for (i=0; i<SZ(adj); ++i)
+            adj[i].clear();
+        fill(blossom.begin(),blossom.end(),false);
+        fill(parent.begin(),parent.end(),-1);
+        for (i=0; i<n; ++i)
+            base[i] = i;
+        for (i=0; i<n; ++i)
+            match[i] = -1;
+    }
+    void setN(int newn) {
+        n = newn;
+        adj.resize(n);
+        blossom.resize(n);
+        base.resize(n);
+        match.resize(n);
+        parent.resize(n);
+        clearGraph();
+    }
+    int lca(int x, int y) {
+        vector <bool> fy;
+        fy.resize(n);
+        fill(fy.begin(),fy.end(),false);
         while (true) {
-            u = root[u];
-            inpath[u] = true;
-            if (u == start) break;
-            u = dad[mat[u]];
+            x = base[x];
+            fy[x] = true;
+            if (match[x] == -1)
+                break;
+            x = parent[match[x]];
         }
         while (true) {
-            v = root[v];
-            if (inpath[v]) break;
-            v = dad[mat[v]];
+            y = base[y];
+            if (fy[y])
+                return y;
+            y = parent[match[y]];
         }
-        return v;
+        return -1;
     }
-    void trace(int u) {
-        while (root[u] != newRoot) {
-            int v = mat[u];
-
-            inblossom[root[u]] = true;
-            inblossom[root[v]] = true;
-
-            u = dad[v];
-            if (root[u] != newRoot) dad[u] = v;
+    void path(int now, int child, int curbase) {
+        while (base[now] != curbase) {
+            blossom[base[now]] = blossom[base[match[now]]] = true;
+            parent[now] = child;
+            child = match[now];
+            now = parent[match[now]];
         }
     }
-    void blossom(int u, int v) {
-        for(int x=1; x<=n; ++x) inblossom[x] = false;
-
-        newRoot = lca(u, v);
-        trace(u); trace(v);
-
-        if (root[u] != newRoot) dad[u] = v;
-        if (root[v] != newRoot) dad[v] = u;
-
-        for(int x=1; x<=n; ++x) if (inblossom[root[x]]) {
-            root[x] = newRoot;
-            if (!inque[x]) {
-                inque[x] = true;
-                que[qsize++] = x;
-            }
-        }
-    }
-    bool bfs() {
-        for(int x=1; x<=n; ++x){
-            inque[x] = false;
-            dad[x] = 0;
-            root[x] = x;
-        }
-        qsize = 0;
-        que[qsize++] = start;
-        inque[start] = true;
-        finish = 0;
-
-        for(int i=0; i<qsize; ++i) {
-            int u = que[i];
-            for (int e = last[u]; e != -1; e = next[e]) {
-                int v = adj[e];
-                if (root[v] != root[u] && v != mat[u]) {
-                    if (v == start || (mat[v] > 0 && dad[mat[v]] > 0)) blossom(u, v);
-                    else if (dad[v] == 0) {
-                        dad[v] = u;
-                        if (mat[v] > 0) que[qsize++] = mat[v];
-                        else {
-                            finish = v;
-                            return true;
+    int augmentPath(int x) {
+        int i,j;
+        for (i=0; i<n; ++i)
+            base[i] = i;
+        for (i=0; i<n; ++i)
+            parent[i] = -1;
+        queue <int> bfs;
+        vector <bool> sudah;
+        sudah.resize(n);
+        fill(sudah.begin(),sudah.end(),false);
+        sudah[x] = true;
+        bfs.push(x);
+        while (!bfs.empty()) {
+            int now = bfs.front();
+            bfs.pop();
+            for (i=0; i<SZ(adj[now]); ++i) {
+                int next = adj[now][i];
+                if (base[next]==base[now] || match[next] == now);
+                else if (next == x || (match[next]!=-1 &&
+                                       parent[match[next]]!=-1)) {
+                    int curbase = lca(now,next);
+                    fill(blossom.begin(),blossom.end(),false);
+                    path(now,next,curbase);
+                    path(next,now,curbase);
+                    for (j = 0; j < n; ++j)
+                        if (blossom[j]) {
+                            base[j] = curbase;
+                            if (!sudah[j]) {
+                                sudah[j] = true;
+                                bfs.push(j);
+                            }
                         }
-                    }
+                } else if (parent[next]==-1) {
+                    parent[next] = now;
+                    if (match[next] == -1)
+                        return next;
+                    sudah[match[next]] = true;
+                    bfs.push(match[next]);
                 }
             }
         }
-        return false;
+        return -1;
     }
-    void enlarge() {
-        int u = finish;
-        while (u > 0) {
-            int v = dad[u], x = mat[v];
-            mat[v] = u;
-            mat[u] = v;
-            u = x;
+    int edmondsMatch() {
+        int i;
+        int res = 0;
+        for (i=0; i<n; ++i) {
+            if (match[i]==-1) {
+                int x = augmentPath(i);
+                while (x>=0) {
+                    int p = parent[x];
+                    int pp = match[p];
+                    match[x] = p;
+                    match[p] = x;
+                    x = pp;
+                }
+            }
         }
+        for (i=0; i<n; ++i)
+            if (match[i]!=-1)
+                ++res;
+        return res >> 1;
     }
-    int maxmat() {
-        for(int x=1; x<=n; ++x) if (mat[x] == 0) {
-            start = x;
-            if (bfs()) enlarge();
-        }
-
-        int ret = 0;
-        for(int x=1; x<=n; ++x) if (mat[x] > x) ++ret;
-        return ret;
-    }
-} edmonds;
+};
