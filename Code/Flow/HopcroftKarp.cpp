@@ -1,3 +1,4 @@
+// Worse Case: E * sqrt(v)
 const int MAXN = 50005, MAXM = 50005;
 vector<int> gph[MAXN];
 int dis[MAXN], l[MAXN], r[MAXM], vis[MAXN];
