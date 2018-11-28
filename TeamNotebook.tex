@@ -1,0 +1,60 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[utf8]{vietnam}
+%\setmonofont{monospace}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{import}
+\usepackage[top=0.75in,bottom=0.25in,left=0.5in,right=0.5in]{geometry}
+
+\lstset{basicstyle=\footnotesize,breaklines=true,language=C++,showstringspaces=false}
+\setlength{\columnseprule}{0.4pt}
+\renewcommand*{\familydefault}{\ttdefault}
+\newcommand{\code}[2]{\section{#1} \lstinputlisting{#2}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{trie - VNU University of Engineering and Technology}
+
+
+\begin{document}
+
+\renewcommand{\baselinestretch}{1.25}
+\setlength{\parskip}{0.5em}
+
+\begin{multicols*}{2}
+\begingroup
+\def\addvspace#1{}
+\tableofcontents
+\code{Simple Max Matching}{./Code/Flow/MaxMatching.cpp}
+\code{Konig}{./Code/Flow/konig.cpp}
+\code{HopcroftKarp Max Matching algorithm}{./Code/Flow/HopcroftKarp.cpp}
+\code{Max matching min cost}{./Code/Flow/MaxMatchingMinCost.cpp}
+\code{Ganeral Matching}{./Code/Flow/GeneralMatching.cpp}
+\code{Dinic MaxFlow}{./Code/Flow/DinicFlow.cpp}
+\code{Two sat}{./Code/Graph/TwoSat.cpp}
+\code{Alternative Tree}{./Code/Graph/AlternativeTree.cpp}
+\code{Aho Corasick}{./Code/String/AhoCorasick.cpp}
+\code{Suffix Array}{./Code/String/SuffixArray.cpp}
+\code{Suffix Array O(n)}{./Code/String/SuffixArrayDC3.cpp}
+\code{Manacher}{./Code/String/Manacher.cpp}
+\code{Convex Hull}{./Code/Geometry/ConvexHull.cpp}
+%\code{Tung Luu Geometry}{./Code/Geometry/TrieGeometry.cpp}
+\code{Geometry’s tricks}{./Code/Geometry/trick.cpp}
+\code{FFT}{./Code/Math/FFT.cpp}
+\code{NTT}{./Code/Math/NTT.cpp}
+\code{Primitive Root}{./Code/Math/PrimitiveRoot.cpp}
+\code{Range Prime Counting}{./Code/Math/RangePrimeCounting.cpp}
+\code{Knight’s shortest path}{./Code/Math/Knight.cpp}
+
+\endgroup
+\end{multicols*}
+%\import{Math/}{Math/math.tex}
+
+
+
+
+\end{document}
