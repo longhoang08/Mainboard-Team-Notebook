@@ -5,10 +5,8 @@ struct node {
     node *par, *left, *right;
     int value, cnt;
 };
-const int N = 100005;
 int n, Q, tree[N];
 node *root, *nilT;
-///===========================================================================///
 void calc(node *x) {
     if (x != nilT)
         x->cnt = x->left->cnt + x->right->cnt + 1;
@@ -27,21 +25,18 @@ node *FindPosition(node *cur, int pos) {
     }
     return nilT;
 }
-///===========================================================================///
 void SetL(node *parent, node *child) {
     if (child != nilT)
         child->par = parent;
     if (parent != nilT)
         parent->left = child;
 }
-
 void SetR(node *parent, node *child) {
     if (child != nilT)
         child->par = parent;
     if (parent != nilT)
         parent->right = child;
 }
-
 void Uptree(node *x) {
     if (x == root)
         return;
@@ -62,7 +57,6 @@ void Uptree(node *x) {
     calc(y);
     calc(x);
 }
-
 void Splay(node *x) {
     while (1) {
         node *y = x->par;
@@ -79,7 +73,6 @@ void Splay(node *x) {
     }
     root = x;
 }
-///===========================================================================///
 void Split(node *r, int i, node *&r1, node *&r2) {
     if (i == 0) {
         r1 = nilT, r2 = r;
@@ -92,7 +85,6 @@ void Split(node *r, int i, node *&r1, node *&r2) {
     r1->right = nilT;
     calc(r1), calc(r2);
 }
-
 node *Join(node *r1, node *r2) {
     if (r1 == nilT)
         return r2;
@@ -103,7 +95,6 @@ node *Join(node *r1, node *r2) {
     calc(r1);
     return r1;
 }
-///===========================================================================///
 void Insert(int i, int val) {
     node *x = new node;
     x->value = val;
@@ -119,12 +110,10 @@ void Delete(int i) {
     node *x = FindPosition(root, i);
     Splay(x);
     node *r1 = x->left, *r2 = x->right;
-    r1->par = nilT;
-    r2->par = nilT;
+    r1->par = nilT; r2->par = nilT;
     delete x;
     root = Join(r1, r2);
 }
-///===========================================================================///
 vector<int> arr;
 void GetArray(node *x) {
     if (x == nilT)
@@ -136,11 +125,6 @@ void GetArray(node *x) {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-#ifndef ONLINE_JUDGE
-    freopen("a.txt", "r", stdin);
-    freopen("b.txt", "w", stdout);
-#endif
     nilT = new node;
     nilT->value = nilT->cnt = 0;
     nilT->left = nilT->right = nilT->par = nilT;
@@ -151,14 +135,12 @@ int main() {
     for (int i = 2; i <= n; i++)
         Insert(i, i);
     for (int i = 1; i <= Q; i++) {
-        int u, v;
         cin >> u >> v;
         int val = FindPosition(root, u)->value;
         Delete(u);
         Insert(v, val);
     }
     GetArray(root);
-    /// Answer
     int ans = 0;
     for (int i = 0; i < n; i++) {
         int F = 1;

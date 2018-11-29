@@ -1,3 +1,12 @@
+// hash func overload
+struct point{
+int x, y;
+bool operator==(const point &p)const{ return x == p.x && y == p.y; }
+};
+struct hasher {
+size_t operator()(const point &p)const{ return p.x * 2 + p.y * 3; }
+};
+unordered_map<point, int, hasher> hsh;
 const double eps = 1e-9;
 bool equal(const double &x, const double &y) {
     return fabs(x - y) <
