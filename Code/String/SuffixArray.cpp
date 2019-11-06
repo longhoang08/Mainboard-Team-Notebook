@@ -1,4 +1,4 @@
- struct SuffixArray {
+struct SuffixArray {
     string a;
     int N, m;
     vector<int> SA, LCP, x, y, w, c;
@@ -38,3 +38,12 @@
             else k = 0;
     }
 };
+
+int main() {
+    SuffixArray sa ("mississippi", 256);
+    for (int i = 0; i < sa.N - 1; ++i) cout << sa.SA[i] << ' '; cout << '\n';
+    for (int i = 0; i < sa.N - 1; ++i) cout << sa.LCP[i] << ' '; cout << '\n';
+    // 10 7 4 1 0 9 8 6 3 5 2
+    // 0 1 1 4 0 0 1 0 2 1 3
+    return 0;
+}

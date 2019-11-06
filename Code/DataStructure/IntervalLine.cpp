@@ -1,12 +1,3 @@
-class Line {
- public:
-  long long a, b;
-};
-class Node {
- public:
-  Line line;
-  Node *leftNode, *rightNode;
-};
 class IntervalLineTree {
  private:
   int n;
@@ -21,12 +12,7 @@ class IntervalLineTree {
       node->line = line;
       return;
     }
-    if (node->leftNode == NULL) {
-      node->leftNode = new Node();
-    }
-    if (node->rightNode == NULL) {
-      node->rightNode = new Node();
-    }
+    // Todo: add left and right note
     if (line.getY(lo) <= node->line.getY(lo) &&
         line.getY(mid) <= node->line.getY(mid)) {
       update(node->rightNode, mid + 1, hi, line);

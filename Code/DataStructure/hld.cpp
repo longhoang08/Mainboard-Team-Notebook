@@ -1,12 +1,3 @@
-chainHead [c]
-dinh dau
-cua chuoi
-c
-    chainInd[u]
-chuoi ma
-dinh u
-nam trong
-
 void hld(int u) {
   //Neu chuoi hien tai chua co dinh dau dinh gan goc nhat thi dat u lam dinh dau cua no
   if (chainHead[nChain] == 0) chainHead[nChain] = u;
