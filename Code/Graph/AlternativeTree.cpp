@@ -2,7 +2,6 @@ int n, m, l, q, t, res, test,
     a[maxn], tin[maxn], tout[maxn], mark[maxn], terror[maxn], f[maxn][20];
 vector<int> adj[maxn], _adj[maxn];
 stack<int> stk;
-
 void visit(const int &u) {
     tin[u] = ++t;
     for(int i = 1; i <= l; ++i) f[u][i] = f[f[u][i-1]][i-1];
@@ -13,11 +12,9 @@ void visit(const int &u) {
         }
     tout[u] = ++t;
 }
-
 bool anc(const int &u, const int &v) {
     return tin[u] <= tin[v] && tout[u] >= tout[v];
 }
-
 int lca(int u, int v) {
     if (anc(u,v)) return u;
     if (anc(v,u)) return v;
@@ -25,7 +22,6 @@ int lca(int u, int v) {
         if (!anc(f[u][i],v)) u = f[u][i];
     return f[u][0];
 }
-
 void query() {
     cin >> m;
     for(int i = 1; i <= m; ++i) {
@@ -56,7 +52,6 @@ void query() {
     check(a[1]);
     cout << res << "\n";
 }
-
 int main() {
     l = log2(n);
     cin >> q;

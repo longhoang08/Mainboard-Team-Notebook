@@ -17,14 +17,11 @@
        FOR(k = A[i][j-1]..A[i+1][j])
          update(dp[i][j])
      }
-
 // OPTCUT
 #include "../template.h"
-
 const int MN = 2011;
 int a[MN], dp[MN][MN], C[MN][MN], A[MN][MN];
 int n;
-
 void solve() {
     cin >> n; FOR(i,1,n) { cin >> a[i]; a[i] += a[i-1]; }
     FOR(i,1,n) FOR(j,i,n) C[i][j] = a[j] - a[i-1];

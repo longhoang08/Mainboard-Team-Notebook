@@ -1,37 +1,40 @@
-struct SuffixArray {
-    const int L;
-    string s;
-    vector<vector<int> > P;
-    vector<pair<pair<int,int>,int> > M;
-    SuffixArray(const string &s) : L(s.length()), s(s), P(1,
-                vector<int>(L, 0)), M(L) {
-        for (int i = 0; i < L; i++) P[0][i] = int(s[i]);
-        for (int skip = 1, lv = 1; skip < L; skip *= 2, lv++) {
-            P.push_back(vector<int>(L, 0));
-            for (int i = 0; i < L; i++)
-                M[i] = make_pair(make_pair(P[lv-1][i], i + skip < L
-                                           ? P[lv-1][i + skip] : -1000), i);
-            sort(M.begin(), M.end());
-            for (int i = 0; i < L; i++)
-                P[lv][M[i].se] = (i > 0 && M[i].fi == M[i-1].fi) ?
-                                 P[lv][M[i-1].se] : i;
+ struct SuffixArray {
+    string a;
+    int N, m;
+    vector<int> SA, LCP, x, y, w, c;
+    SuffixArray(string _a, int m) : a(" " + _a), N(a.length()), m(m),
+            SA(N), LCP(N), x(N), y(N), w(max(m, N)), c(N) {
+        a[0] = 0;
+        DA();
+        kasaiLCP();
+        #define REF(X) { rotate(X.begin(), X.begin()+1, X.end()); X.pop_back(); }
+        REF(SA); REF(LCP);
+        a = a.substr(1, a.size());
+        for(int i = 0; i < (int) SA.size(); ++i) --SA[i];
+        #undef REF
+    }
+    inline bool cmp (const int a, const int b, const int l) { return (y[a] == y[b] && y[a + l] == y[b + l]); }
+    void Sort() {
+        for(int i = 0; i < m; ++i) w[i] = 0;
+        for(int i = 0; i < N; ++i) ++w[x[y[i]]];
+        for(int i = 0; i < m - 1; ++i) w[i + 1] += w[i];
+        for(int i = N - 1; i >= 0; --i) SA[--w[x[y[i]]]] = y[i];
+    }
+    void DA() {
+        for(int i = 0; i < N; ++i) x[i] = a[i], y[i] = i;
+        Sort();
+        for(int i, j = 1, p = 1; p < N; j <<= 1, m = p) {
+            for(p = 0, i = N - j; i < N; i++) y[p++] = i;
+            for (int k = 0; k < N; ++k) if (SA[k] >= j) y[p++] = SA[k] - j;
+            Sort();
+            for(swap(x, y), p = 1, x[SA[0]] = 0, i = 1; i < N; ++i)
+                x[SA[i]] = cmp(SA[i - 1], SA[i], j) ? p - 1 : p++;
         }
     }
-    vector<int> GetSuffixArray() {
-        return P.back();
-    }
-// returns the length of the longest common prefix of s[i...L-1]
-    and s[j...L-1]
-    int LongestCommonPrefix(int i, int j) {
-        int len = 0;
-        if (i == j) return L - i;
-        for (int k = P.size() - 1; k >= 0 && i < L && j < L; k--) {
-            if (P[k][i] == P[k][j]) {
-                i += 1 << k;
-                j += 1 << k;
-                len += 1 << k;
-            }
-        }
-        return len;
+    void kasaiLCP() {
+        for (int i = 0; i < N; i++) c[SA[i]] = i;
+        for (int i = 0, j, k = 0; i < N; LCP[c[i++]] = k)
+            if (c[i] > 0) for (k ? k-- : 0, j = SA[c[i] - 1]; a[i + k] == a[j + k]; k++);
+            else k = 0;
     }
 };

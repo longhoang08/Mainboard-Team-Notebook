@@ -7,7 +7,6 @@
 #define tset(i, b) { if (b) t[(i) >> 3] |= MASK((i) & 7); else t[(i) >> 3] &= ~MASK((i) & 7); }
 #define chr(i) (cs == sizeof(int) ? ((int *)s)[i] : ((unc *)s)[i])
 #define isLMS(i) ((i) > 0 && tget(i) && !tget((i) - 1))
-
 typedef unsigned char unc;
 class SuffixArray {
     public:
@@ -117,10 +116,8 @@ class SuffixArray {
         calc_lcp();
     }
 };
-
 //Sorted suffices are SA[1] to SA[N]. The values of SA[1], SA[2], ..., SA[N] are 0, 1, ..., N - 1
 //The longest common prefix of SA[i] and SA[i + 1] is LCP[i]
-
 int main(void) {
     string s = "mississippi";
     SuffixArray suffixArray(s);

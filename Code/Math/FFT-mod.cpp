@@ -10,7 +10,6 @@ struct cp {
 } rts[maxf + 1];
 cp fa[maxf], fb[maxf];
 cp fc[maxf], fd[maxf];
-
 int bitrev[maxf];
 void fftinit() {
   int k = 0;
