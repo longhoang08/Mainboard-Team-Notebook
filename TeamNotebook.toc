@@ -1,0 +1,39 @@
+\contentsline {section}{\numberline {1}Java Fast Input}{1}
+\contentsline {section}{\numberline {2}Simple Max Matching}{2}
+\contentsline {section}{\numberline {3}Konig}{2}
+\contentsline {section}{\numberline {4}Hopcroft Karp Max Matching algorithm}{2}
+\contentsline {section}{\numberline {5}Max matching min cost}{3}
+\contentsline {section}{\numberline {6}Ganeral Matching}{4}
+\contentsline {section}{\numberline {7}Dinic MaxFlow}{5}
+\contentsline {section}{\numberline {8}Mincost MaxFlow SPFA}{6}
+\contentsline {section}{\numberline {9}Upper Lower}{7}
+\contentsline {section}{\numberline {10}Two sat}{8}
+\contentsline {section}{\numberline {11}Alternative Tree}{8}
+\contentsline {section}{\numberline {12}Max Clique}{9}
+\contentsline {section}{\numberline {13}Euler Path}{10}
+\contentsline {section}{\numberline {14}Interection of two paths}{11}
+\contentsline {section}{\numberline {15}Tree ISO}{11}
+\contentsline {section}{\numberline {16}Centroid}{12}
+\contentsline {section}{\numberline {17}Aho Corasick}{12}
+\contentsline {section}{\numberline {18}Suffix Array}{13}
+\contentsline {section}{\numberline {19}Suffix Array O(n)}{13}
+\contentsline {section}{\numberline {20}Manacher}{15}
+\contentsline {section}{\numberline {21}DP knuth}{15}
+\contentsline {section}{\numberline {22}DP divide conquer}{16}
+\contentsline {section}{\numberline {23}Convex Hull}{16}
+\contentsline {section}{\numberline {24}Geometry\IeC {\textquoteright }s tricks}{17}
+\contentsline {section}{\numberline {25}Geometry 2D}{18}
+\contentsline {section}{\numberline {26}Geometry 3D}{19}
+\contentsline {section}{\numberline {27}FFT}{20}
+\contentsline {section}{\numberline {28}NTT}{20}
+\contentsline {section}{\numberline {29}Gauss}{21}
+\contentsline {section}{\numberline {30}Simplex}{21}
+\contentsline {section}{\numberline {31}Primitive Root}{22}
+\contentsline {section}{\numberline {32}Range Prime Counting}{22}
+\contentsline {section}{\numberline {33}Knight\IeC {\textquoteright }s shortest path}{23}
+\contentsline {section}{\numberline {34}Extended Euclid}{23}
+\contentsline {section}{\numberline {35}Factorial Mod}{23}
+\contentsline {section}{\numberline {36}Sqrt Mod}{23}
+\contentsline {section}{\numberline {37}Interval line}{24}
+\contentsline {section}{\numberline {38}BIT 2D}{25}
+\contentsline {section}{\numberline {39}Heavy-Light Decomposition}{25}
